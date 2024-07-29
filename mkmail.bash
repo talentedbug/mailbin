@@ -66,6 +66,7 @@ do
     printf "        <br>\n" >> ./site/index.html
     printf "    </p>\n" >> ./site/index.html
 done
+printf "<p align=\"center\">Any content on this page is licensed under CC0 without specifying.</p>" >> ./site/index.html
 printf "</body>\n" >> ./site/index.html
 
 echo "[INFO] index.html created."
@@ -95,7 +96,7 @@ do
     echo "[INFO] ${lp}.html created."
     printf "<!DOCTYPE html>\n<head>\n    <title>${SITE_NAME} - ${lp}</title>\n<head>\n" >> "./site/mail/${lp}.html"
     printf "<body>\n" >> "./site/mail/${lp}.html"
-    printf "    <p><a href=\"./${llp}.html\">[prev]</a> <a href=\"./${bn}.html\">[next]</a></p>\n" >> "./site/mail/${lp}.html"
+    printf "    <p><a href=\"../index.html\">[HOME]</a> <a href=\"./${llp}.html\">[prev]</a> <a href=\"./${bn}.html\">[next]</a></p>\n" >> "./site/mail/${lp}.html"
     printf "    <p style=\"font-family: monospace;\">\n" >> "./site/mail/${lp}.html"
     printf "        <b>Subject</b> &nbsp;${lp}<br>\n" >> "./site/mail/${lp}.html"
     printf "        <b>From &nbsp;&nbsp;</b> &nbsp;${FROM_NAME} &lt;${FROM_EMAIL}&gt;<br>\n" >> "./site/mail/${lp}.html"
@@ -104,7 +105,9 @@ do
     printf "    </p>\n" >> ./site/index.html
     printf "    <pre style=\"font-family: monospace\">\n" >> "./site/mail/${lp}.html"
     fold -w $((LINE_LENGTH)) -s "./src/${lp}.txt" >> "./site/mail/${lp}.html"
-    printf "    </pre>\n" >> "./site/mail/${lp}.html"
+    printf "\n    </pre>\n" >> "./site/mail/${lp}.html"
+    printf "<br><p align=\"center\">Any content on this page is licensed under CC0 without specifying.</p>\n" >> "./site/mail/${lp}.html"
+    printf "</body>\n" >> "./site/mail/${lp}.html"
     llp="${lp}"
     lp="${bn}"
 done
@@ -112,7 +115,7 @@ touch "./site/mail/${lp}.html"
 echo "[INFO] ${lp}.html created."
 printf "<!DOCTYPE html>\n<head>\n    <title>${SITE_NAME} - ${lp}</title>\n<head>\n" >> "./site/mail/${lp}.html"
 printf "<body>\n" >> "./site/mail/${lp}.html"
-printf "    <p><a href=\"./${llp}.html\">[prev]</a> <a href=\"./${bn}.html\">[next]</a></p>\n" >> "./site/mail/${lp}.html"
+printf "    <p><a href=\"../index.html\">[HOME]</a> <a href=\"./${llp}.html\">[prev]</a> <a href=\"./${bn}.html\">[next]</a></p>\n" >> "./site/mail/${lp}.html"
 printf "    <p style=\"font-family: monospace;\">\n" >> "./site/mail/${lp}.html"
 printf "        <b>Subject</b> &nbsp;${lp}<br>\n" >> "./site/mail/${lp}.html"
 printf "        <b>From &nbsp;&nbsp;</b> &nbsp;${FROM_NAME} &lt;${FROM_EMAIL}&gt;<br>\n" >> "./site/mail/${lp}.html"
@@ -121,6 +124,8 @@ printf "        <br>\n" >> ./site/index.html
 printf "    </p>\n" >> ./site/index.html
 printf "    <pre style=\"font-family: monospace\">\n" >> "./site/mail/${lp}.html"
 fold -w $((LINE_LENGTH)) -s "./src/${bn}.txt" >> "./site/mail/${lp}.html"
-printf "    </pre>\n" >> "./site/mail/${lp}.html"
+printf "\n    </pre>\n" >> "./site/mail/${lp}.html"
+printf "<br><p align=\"center\">Any content on this page is licensed under CC0 without specifying.</p>\n" >> "./site/mail/${lp}.html"
+printf "</body>\n" >> "./site/mail/${lp}.html"
 
 echo "[INFO] All done."
