@@ -21,9 +21,7 @@ For an example you can read https://lkml.org/, the Linux Kernel Mailing List
 Archive.
 
 MailBin use *plain* text as source files. It means no images, no extra files 
-and no fancy text effects are allowed. If you really need to display an image 
-or so, please place it in the `asset` directory and cite it as 
-https://yourdomain/asset/xxx.xxx.
+and no fancy text effects are allowed.
 
 To install it on your system, simply clone this repository. Modify the 
 settings according to your preference, which is not an optional step. Then run 
