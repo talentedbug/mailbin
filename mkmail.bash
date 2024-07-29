@@ -34,6 +34,7 @@ echo "[INFO] Basic checks passed. No error reported."
 
 # Clean old files
 rm -rf ./site 2>/dev/null
+echo "[INFO] Old ./site cleared."
 
 # Create basic structure
 mkdir ./site
@@ -48,7 +49,7 @@ printf "    <h1>${SITE_NAME}</h1>\n" >> ./site/index.html
 printf "    <h2>About</h2>\n" >> ./site/index.html
 printf "    <pre>\n" >> ./site/index.html
 fold -w $((LINE_LENGTH)) -s ./src/about.txt >> ./site/index.html
-printf "    </pre>\n" >> ./site/ind ex.html
+printf "    </pre>\n" >> ./site/index.html
 printf "    <h2>Index</h2>\n" >> ./site/index.html
 for doc in $(ls -t ./src);
 do
@@ -73,7 +74,7 @@ echo "[INFO] index.html created."
 cnt=0
 for doc in ./src/*;
 do
-    if [[ $doc = "about.txt" ]];
+    if [[ $doc = "./src/about.txt" ]];
     then
         continue
     fi
@@ -84,39 +85,42 @@ do
         lp=${s%.*}
         continue
     fi
-    echo $lp
     s=$(basename "${doc}")
     bn=${s%.*}
-    if [[ $cnt = 1 ]];
+    if [[ $cnt = 2 ]];
     then
         llp="${lp}"
     fi
     touch "./site/mail/${lp}.html"
+    echo "[INFO] ${lp}.html created."
     printf "<!DOCTYPE html>\n<head>\n    <title>${SITE_NAME} - ${lp}</title>\n<head>\n" >> "./site/mail/${lp}.html"
     printf "<body>\n" >> "./site/mail/${lp}.html"
-    printf "    <p><a href="./${llp}.html">[prev]</a> <a href="./${bn}.html">[next]</a></p>\n" >> "./site/mail/${lp}.html"
+    printf "    <p><a href=\"./${llp}.html\">[prev]</a> <a href=\"./${bn}.html\">[next]</a></p>\n" >> "./site/mail/${lp}.html"
     printf "    <p style=\"font-family: monospace;\">\n" >> "./site/mail/${lp}.html"
-    printf "        <b>Subject</b> &nbsp;${doc%.*}<br>\n" >> "./site/mail/${lp}.html"
+    printf "        <b>Subject</b> &nbsp;${lp}<br>\n" >> "./site/mail/${lp}.html"
     printf "        <b>From &nbsp;&nbsp;</b> &nbsp;${FROM_NAME} &lt;${FROM_EMAIL}&gt;<br>\n" >> "./site/mail/${lp}.html"
-    printf "        <b>Date &nbsp;&nbsp;</b> &nbsp;$(TZ=${TIME_ZONE} date -r "./src/${bn}" +"%Y-%m-%d %H:%M %Z")<br>\n" >> "./site/mail/${lp}.html"
+    printf "        <b>Date &nbsp;&nbsp;</b> &nbsp;$(TZ=${TIME_ZONE} date -r "./src/${lp}.txt" +"%Y-%m-%d %H:%M %Z")<br>\n" >> "./site/mail/${lp}.html"
     printf "        <br>\n" >> ./site/index.html
     printf "    </p>\n" >> ./site/index.html
     printf "    <pre style=\"font-family: monospace\">\n" >> "./site/mail/${lp}.html"
-    fold -w $((LINE_LENGTH)) -s >> "./site/mail/${lp}.html"
+    fold -w $((LINE_LENGTH)) -s "./src/${lp}.txt" >> "./site/mail/${lp}.html"
     printf "    </pre>\n" >> "./site/mail/${lp}.html"
     llp="${lp}"
     lp="${bn}"
 done
 touch "./site/mail/${lp}.html"
+echo "[INFO] ${lp}.html created."
 printf "<!DOCTYPE html>\n<head>\n    <title>${SITE_NAME} - ${lp}</title>\n<head>\n" >> "./site/mail/${lp}.html"
 printf "<body>\n" >> "./site/mail/${lp}.html"
+printf "    <p><a href=\"./${llp}.html\">[prev]</a> <a href=\"./${bn}.html\">[next]</a></p>\n" >> "./site/mail/${lp}.html"
 printf "    <p style=\"font-family: monospace;\">\n" >> "./site/mail/${lp}.html"
-printf "        <b>Subject</b> &nbsp;${doc%.*}<br>\n" >> "./site/mail/${lp}.html"
+printf "        <b>Subject</b> &nbsp;${lp}<br>\n" >> "./site/mail/${lp}.html"
 printf "        <b>From &nbsp;&nbsp;</b> &nbsp;${FROM_NAME} &lt;${FROM_EMAIL}&gt;<br>\n" >> "./site/mail/${lp}.html"
-printf "        <b>Date &nbsp;&nbsp;</b> &nbsp;$(TZ=${TIME_ZONE} date -r "./src/${bn}" +"%Y-%m-%d %H:%M %Z")<br>\n" >> "./site/mail/${lp}.html"
+printf "        <b>Date &nbsp;&nbsp;</b> &nbsp;$(TZ=${TIME_ZONE} date -r "./src/${bn}.txt" +"%Y-%m-%d %H:%M %Z")<br>\n" >> "./site/mail/${lp}.html"
 printf "        <br>\n" >> ./site/index.html
 printf "    </p>\n" >> ./site/index.html
-printf "    <p><a href="./${llp}.html">[prev]</a> <a href="./${bn}.html">[next]</a></p>\n" >> "./site/mail/${lp}.html"
 printf "    <pre style=\"font-family: monospace\">\n" >> "./site/mail/${lp}.html"
-fold -w $((LINE_LENGTH)) -s >> "./site/mail/${lp}.html"
+fold -w $((LINE_LENGTH)) -s "./src/${bn}.txt" >> "./site/mail/${lp}.html"
 printf "    </pre>\n" >> "./site/mail/${lp}.html"
+
+echo "[INFO] All done."
