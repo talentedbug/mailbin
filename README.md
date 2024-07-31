@@ -1,3 +1,5 @@
+> The project was given up halfway. Sorry!
+
 ```
 MAILBIN - A mailing list-style blog framework for static pages
 
